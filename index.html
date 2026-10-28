@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a1020">
+<title>Mini Measure Studio 6.0</title>
+<style>
+:root{--bg:#0a1020;--panel:#141e32;--panel2:#1a2942;--line:#2d3d59;--text:#eef4ff;--muted:#9aabc5;--cyan:#55ead4;--blue:#7daeff;--pink:#ff708c;--gold:#ffd166;--green:#7ce5a9}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 600px at 0 -10%,#243e67 0%,transparent 60%),var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{max-width:1100px;margin:auto;padding:22px 15px 16px}.brand{display:flex;gap:12px;align-items:center}.logo{width:49px;height:49px;border-radius:16px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#091424;font-weight:950;font-size:22px;box-shadow:0 8px 30px #55ead42c}.eyebrow{font-size:10px;letter-spacing:2px;color:var(--cyan);font-weight:900;text-transform:uppercase}h1{font-size:25px;letter-spacing:-.7px;margin:1px 0}.sub{color:var(--muted);font-size:13px;margin:10px 0 0}
+main{max-width:1100px;margin:auto;padding:0 12px 25px;display:grid;gap:12px}.card{background:linear-gradient(145deg,#17243b,#111a2b);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 12px 28px #0002}.card h2{font-size:16px;margin:0 0 12px;display:flex;gap:8px;align-items:center}.num{width:26px;height:26px;display:grid;place-items:center;border-radius:9px;background:#263954;color:var(--cyan);font-size:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>*{flex:1;min-width:110px}button,.filelabel{border:0;border-radius:11px;padding:11px 12px;font-weight:800;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}button:disabled{opacity:.38;cursor:not-allowed}.primary{background:linear-gradient(120deg,var(--cyan),#9af5e9);color:#071522}.blue{background:linear-gradient(120deg,#7daeff,#b2cbff);color:#0a1426}.secondary,.filelabel{background:#263751;color:var(--text);border:1px solid #3b4d6c}.danger{background:#432a3a;color:#ffb5c7;border:1px solid #70435a}input[type=file]{display:none}input[type=number],input[type=text],select{width:100%;min-width:0;background:#0b1425;color:var(--text);border:1px solid #344762;border-radius:10px;padding:10px;font:inherit}label{display:block;font-size:12px;color:var(--muted);margin:8px 0 5px}.small{font-size:12px;color:var(--muted)}.hint{background:#0c1829;border:1px solid #2b405b;border-radius:11px;padding:10px;color:#c2d0e5;font-size:12px;margin-top:9px}.hint b{color:var(--cyan)}.status{font-size:12px;color:var(--muted);min-height:18px;margin-top:9px}.good{color:var(--green)!important}.bad{color:#ff9bad!important}
+.layout{display:grid;gap:12px}.canvaswrap{background:#070c16;border:1px solid #2d3c56;border-radius:14px;overflow:hidden;display:grid;place-items:center;min-height:175px}.canvaswrap canvas{width:100%;height:auto;max-height:68vh;display:block;touch-action:manipulation}.placeholder{text-align:center;color:var(--muted);padding:25px}.placeholder strong{display:block;font-size:16px;color:var(--text);margin:6px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.chip{font-size:10px;padding:5px 8px;border:1px solid #354763;background:#17243a;color:#c9d6eb;border-radius:30px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{padding:12px;border-radius:12px;border:1px solid #2a3a55;background:#0c1627}.metric .k{font-size:10px;color:var(--muted)}.metric .v{font-size:21px;font-weight:900;margin-top:3px;overflow-wrap:anywhere}.cyan{color:var(--cyan)}.blueText{color:var(--blue)}.gold{color:var(--gold)}.pink{color:var(--pink)}.table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}.table td,.table th{padding:8px 5px;border-bottom:1px solid #2b3a53;text-align:left}.table th{color:var(--muted);font-weight:650}.objectrow{display:flex;gap:7px;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #283952;font-size:12px}.objectrow b{color:var(--cyan)}.hidden{display:none!important}
+@media(min-width:820px){main{grid-template-columns:1.15fr .85fr;align-items:start}.layout{grid-column:1;grid-row:1 / span 4}.side{grid-column:2}.canvaswrap canvas{max-height:76vh}}
+#modelStage{height:230px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(ellipse at center,#1d3450,#08101d 72%);border:1px solid #2d3d59;border-radius:13px;margin-top:10px;perspective:700px;touch-action:pan-y;cursor:grab}#modelCube{position:relative;transform-style:preserve-3d;transform:rotateX(-22deg) rotateY(-32deg);width:120px;height:90px;transition:transform .12s linear}.face{position:absolute;border:1px solid #8ff6e7aa;background:#55ead430;box-shadow:inset 0 0 20px #55ead412}.front{width:120px;height:90px;transform:translateZ(35px)}.back{width:120px;height:90px;transform:rotateY(180deg) translateZ(35px)}.right{width:70px;height:90px;transform:rotateY(90deg) translateZ(85px)}.left{width:70px;height:90px;transform:rotateY(-90deg) translateZ(35px)}.top{width:120px;height:70px;transform:rotateX(90deg) translateZ(35px)}.bottom{width:120px;height:70px;transform:rotateX(-90deg) translateZ(55px)}
+#cameraStage{background:#050a12;border:1px solid #2d3c56;border-radius:14px;overflow:hidden;display:none;position:relative;margin-top:10px}#cameraVideo{width:100%;max-height:55vh;display:block;object-fit:contain;background:#050a12}#liveWrap{position:relative;width:100%;line-height:0}#liveOverlay{position:absolute;inset:0;width:100%;height:100%;touch-action:manipulation}#liveReadout{font-size:18px;font-weight:900;color:var(--cyan);padding:8px 10px;background:#0b1425;border-radius:10px;margin-top:8px}#cameraTip{font-size:11px;color:var(--muted);margin-top:6px}
+footer{text-align:center;color:#7486a3;font-size:11px;padding:0 15px 22px}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">MM</div><div><div class="eyebrow">Mechanical • Image Lab</div><h1>Mini Measure <span style="color:var(--cyan)">Studio 6.0</span></h1></div></div><p class="sub">Live measurement overlay • reference calibration • object detection • engineering tools</p></header>
+<main>
+<section class="card side">
+<h2><span class="num">01</span> Load & detect</h2>
+<div class="row"><label class="filelabel" for="photo">📷 Choose / take photo</label><input id="photo" type="file" accept="image/*" capture="environment"><button id="reset" class="secondary">↻ Reset</button></div>
+<div class="row" style="margin-top:9px"><button id="detect" class="primary" disabled>✦ Detect object</button><button id="clearDetect" class="secondary" disabled>Clear detection</button></div>
+<div class="hint">Place the ruler and object on the same flat plane; take the photo from above. Detection proposes a boundary—it is not guaranteed to identify the correct object in every scene.</div>
+<div id="loadStatus" class="status">No photo loaded.</div><div id="detectStatus" class="status">Load a photo, then run detection.</div>
+</section>
+<section class="card side">
+<h2><span class="num">📹</span> Live camera measure</h2>
+<p class="small">Live ruler mode: calibrate two points on a known reference, then tap two points on the object. The calibrated distance is drawn over the live preview while the camera runs. Keep the reference and object on the same flat plane and distance from the camera.</p>
+<div class="row"><button id="startCamera" class="primary">▶ Start live camera</button><button id="stopCamera" class="secondary" disabled>■ Stop camera</button></div>
+<div id="cameraStage"><div id="liveWrap"><video id="cameraVideo" autoplay playsinline muted></video><canvas id="liveOverlay"></canvas></div></div>
+<div class="row" style="margin-top:8px"><button id="liveCalibrate" class="blue" disabled>📏 Calibrate live ruler</button><button id="liveMeasure" class="primary" disabled>🎯 Measure live</button></div>
+<div class="grid2"><div><label for="liveKnown">Known reference length</label><input id="liveKnown" type="number" min="0.01" step="any" value="10"></div><div><label for="liveUnit">Unit</label><select id="liveUnit"><option value="mm">mm</option><option value="cm" selected>cm</option><option value="in">in</option></select></div></div>
+<div id="liveReadout" aria-live="polite">Live ruler not calibrated.</div>
+<div class="row" style="margin-top:8px"><button id="captureCamera" class="secondary" disabled>📸 Capture frame for detailed tools</button><button id="flipCamera" class="secondary" disabled>↻ Switch camera</button><button id="clearLive" class="secondary" disabled>Clear live points</button></div>
+<div id="cameraTip">Camera permission is required. If camera access is blocked, open this page over HTTPS or use the Android app's camera permission.</div>
+<div id="cameraStatus" class="status">Camera is off.</div>
+</section>
+<section class="card layout">
+<h2><span class="num">02</span> Image workbench</h2>
+<div class="canvaswrap"><div id="placeholder" class="placeholder">⌗<strong>Your engineering photo goes here</strong><span class="small">Load an image to start.</span></div><canvas id="canvas" class="hidden"></canvas></div>
+<div class="chips"><span class="chip">🟢 Calibration</span><span class="chip">🔴 Measurements</span><span class="chip">🟦 Detected outline</span><span class="chip">🔒 Local processing</span></div>
+<div id="canvasStatus" class="status">Tip: clear contrast and a simple background improve detection.</div>
+</section>
+<section class="card side">
+<h2><span class="num">03</span> Calibrate</h2>
+<p class="small">Tap two points a known distance apart on the ruler.</p>
+<label for="known">Known reference distance</label><div class="row"><input id="known" type="number" value="10" min=".01" step="any"><select id="knownUnit"><option value="mm">mm</option><option value="cm">cm</option><option value="in">in</option></select></div>
+<div class="row" style="margin-top:9px"><button id="calibrate" class="primary" disabled>① Set reference points</button><button id="clearCal" class="secondary" disabled>Clear calibration</button></div>
+<div id="calStatus" class="status">Load a photo first.</div>
+</section>
+<section class="card side">
+<h2><span class="num">04</span> Dimensions</h2>
+<label for="unit">Display units</label><select id="unit"><option value="mm">Millimetres (mm)</option><option value="cm">Centimetres (cm)</option><option value="in">Inches (in)</option></select>
+<div class="row" style="margin-top:9px"><button id="manual" class="blue" disabled>Manual measure</button><button id="box" class="secondary" disabled>Measure detected box</button></div>
+<div class="row" style="margin-top:8px"><button id="edge" class="secondary" disabled>Edge assist</button><button id="undo" class="secondary" disabled>Undo</button></div>
+<div class="row" style="margin-top:8px"><button id="angle" class="primary" disabled>∠ Measure angle</button><button id="diameter" class="blue" disabled>◯ Measure diameter</button><button id="clearMeasures" class="danger" disabled>Clear measurements</button></div>
+<p class="small">Manual: tap two endpoints. Angle: tap A, vertex B, then C. Diameter: tap circle centre, then its edge. Length/diameter needs calibration; angles do not.</p>
+<div id="measureStatus" class="status">Calibrate before measuring.</div>
+</section>
+<section class="card side">
+<h2><span class="num">05</span> Results & validation</h2>
+<div class="grid2">
+<div class="metric"><div class="k">Scale</div><div class="v cyan" id="scaleValue">— <span style="font-size:11px">px/mm</span></div></div>
+<div class="metric"><div class="k">Measurements</div><div class="v blueText" id="countValue">0</div></div>
+<div class="metric"><div class="k">Last result</div><div class="v gold" id="lastValue">—</div></div>
+<div class="metric"><div class="k">Detection</div><div class="v pink" id="detectValue">—</div></div>
+</div>
+<label for="actual">Actual measurement for last result (mm)</label><input id="actual" type="number" min="0" step="any" placeholder="e.g. 34.00">
+<div class="row" style="margin-top:8px"><button id="compare" class="secondary" disabled>Calculate error</button><button id="saveImage" class="secondary" disabled>Save annotated image</button></div>
+<label for="tolerance">Allowed tolerance (mm, optional)</label><input id="tolerance" type="number" min="0" step="any" value="0.5"><div id="errorStatus" class="status">Enter an actual measurement to compare. Tolerance is optional.</div>
+<div id="resultList" class="hint">Measurement history will appear here.</div>
+<div class="row" style="margin-top:9px"><button id="csv" class="secondary" disabled>Export CSV</button><button id="report" class="primary" disabled>Print / save PDF</button></div>
+</section>
+<section class="card side">
+<h2><span class="num">06</span> Detection controls</h2>
+<label for="sensitivity">Detection sensitivity</label><select id="sensitivity"><option value="low">Low — cleaner shapes</option><option value="medium" selected>Medium — balanced</option><option value="high">High — more edges</option></select>
+<label for="detectMode">Detection method</label><select id="detectMode"><option value="contrast">Foreground contrast</option><option value="edges">Strong edge region</option></select>
+<div class="hint"><b>How it works:</b> the detector now estimates the border/background brightness and searches for either darker or brighter connected foreground regions, then ranks candidates by size, solidity and position. It is still classic image processing—not a trained AI model—and outputs a candidate bounding box, not a guaranteed exact contour. Plain backgrounds and even lighting help most.</div>
+<div class="status">Engineering note: perspective distortion and calibration placement can dominate the measurement error.</div>
+</section>
+
+<section class="card side">
+<h2><span class="num">07</span> 3D part preview</h2>
+<p class="small">Enter estimated dimensions or use dimensions you measured above. Drag the model to rotate it.</p>
+<div class="grid2"><div><label for="dimL">Length (mm)</label><input id="dimL" type="number" min="0.1" step="any" value="80"></div><div><label for="dimW">Width (mm)</label><input id="dimW" type="number" min="0.1" step="any" value="45"></div><div><label for="dimH">Height (mm)</label><input id="dimH" type="number" min="0.1" step="any" value="25"></div><div><label for="partMaterial">Material density (g/cm³)</label><input id="partMaterial" type="number" min="0.001" step="any" value="7.85"></div></div>
+<div class="row" style="margin-top:9px"><button id="update3d" class="primary">Update 3D preview</button><button id="useLast" class="secondary">Use last length</button></div>
+<div id="modelStage" aria-label="Rotatable 3D rectangular-prism preview"><div id="modelCube"><div class="face front"></div><div class="face back"></div><div class="face right"></div><div class="face left"></div><div class="face top"></div><div class="face bottom"></div></div></div>
+<div class="grid2"><div class="metric"><div class="k">Rectangular volume</div><div class="v cyan" id="volumeValue">90.0 cm³</div></div><div class="metric"><div class="k">Estimated mass</div><div class="v gold" id="massValue">706.5 g</div></div></div>
+<div id="modelStatus" class="status">Illustrative 3D block only—not a scan or reconstructed part.</div>
+</section>
+<section class="card side"><h2><span class="num">08</span> Engineering toolbox</h2><div class="grid2"><div class="metric"><div class="k">Surface area</div><div class="v blueText" id="surfaceValue">—</div></div><div class="metric"><div class="k">Volume formula</div><div class="v" style="font-size:15px">L × W × H</div></div></div><div class="hint">3D preview and mass are estimates for a solid rectangular block. Real parts may be hollow, curved, or irregular. Verify critical dimensions with a suitable instrument.</div></section>
+</main>
+<footer>MINI MEASURE STUDIO 5.0 • Built for curious engineers ✦ Photos stay in your browser.</footer>
+<script>
+(()=> {
+const $=id=>document.getElementById(id), canvas=$('canvas'),ctx=canvas.getContext('2d',{willReadFrequently:true});
+let img=null, name='measurement', scale=null, mode='idle', taps=[], calibrationPoints=[], measures=[], detection=null, rotX=-22, rotY=-32, dragModel=null;
+function st(id,msg,cls=''){const e=$(id);e.textContent=msg;e.className='status '+cls}
+function mmFrom(v,u){return u==='cm'?v*10:u==='in'?v*25.4:v}
+function convert(mm){const u=$('unit').value;return u==='cm'?mm/10:u==='in'?mm/25.4:mm}
+function un(){const u=$('unit').value;return u==='cm'?'cm':u==='in'?'in':'mm'}
+function enabled(){const has=!!img,cal=scale!==null;['detect','clearDetect'].forEach(id=>$(id).disabled=!has);['calibrate','clearCal'].forEach(id=>$(id).disabled=!has);['manual','box','edge','diameter'].forEach(id=>$(id).disabled=!cal);['clearMeasures','saveImage','csv','report'].forEach(id=>$(id).disabled=!has||!measures.length);$('compare').disabled=!cal||!measures.length||measures[measures.length-1]?.kind==='Angle';$('angle').disabled=!has;$('undo').disabled=!measures.length;update()}
+function update(){
+ $('scaleValue').innerHTML=scale===null?'— <span style="font-size:11px">px/mm</span>':scale.toFixed(2)+' <span style="font-size:11px">px/mm</span>';
+ $('countValue').textContent=measures.length;$('detectValue').textContent=detection?'Found':'—';
+ const m=measures[measures.length-1];$('lastValue').textContent=m?(m.kind==='Angle'?m.angleDeg.toFixed(2)+'°':(m.kind==='Diameter'?'Ø ':'')+convert(m.mm).toFixed(2)+' '+un()):'—';
+ $('resultList').innerHTML=measures.length?measures.map((m,i)=>`<div class="objectrow"><span>${i+1}. ${m.kind}</span><b>${m.kind==='Angle'?m.angleDeg.toFixed(2)+'°':(m.kind==='Diameter'?'Ø ':'')+convert(m.mm).toFixed(2)+' '+un()}</b></div>`).join(''):'Measurement history will appear here.';
+}
+function draw(){
+ if(!img)return;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+ if(detection){ctx.save();ctx.strokeStyle='#7daeff';ctx.fillStyle='#7daeff18';ctx.lineWidth=Math.max(2,canvas.width/450);ctx.setLineDash([7,5]);ctx.strokeRect(detection.x,detection.y,detection.w,detection.h);ctx.fillRect(detection.x,detection.y,detection.w,detection.h);ctx.setLineDash([]);ctx.font=`bold ${Math.max(13,canvas.width/60)}px system-ui`;ctx.fillStyle='#7daeff';ctx.fillText('Candidate object',detection.x+5,Math.max(18,detection.y-7));ctx.restore()}
+ // Persistent calibration reference: keep both selected points visible after calibration.
+ if(calibrationPoints.length===2){
+  const [p1,p2]=calibrationPoints, radius=Math.max(7,canvas.width/140);
+  ctx.save();ctx.lineWidth=Math.max(3,canvas.width/450);ctx.strokeStyle='#00e6a0';ctx.fillStyle='#00e6a0';
+  ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();
+  calibrationPoints.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x,p.y,radius,0,Math.PI*2);ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#ffffff';ctx.stroke();ctx.fillStyle='#00e6a0';ctx.font=`bold ${Math.max(14,canvas.width/55)}px system-ui`;ctx.fillText(`Reference ${i+1}`,Math.min(canvas.width-110,p.x+radius+5),Math.max(18,p.y-10));ctx.fillStyle='#00e6a0';ctx.strokeStyle='#ffffff'});
+  ctx.restore();
+ }
+ if(taps.length){ctx.save();ctx.strokeStyle='#55ead4';ctx.fillStyle='#55ead4';ctx.lineWidth=Math.max(3,canvas.width/450);taps.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x,p.y,Math.max(7,canvas.width/140),0,Math.PI*2);ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#ffffff';ctx.stroke();ctx.fillStyle='#55ead4';ctx.font=`bold ${Math.max(14,canvas.width/55)}px system-ui`;ctx.fillText(`Point ${i+1}`,Math.min(canvas.width-85,p.x+9),Math.max(18,p.y-10));ctx.strokeStyle='#ffffff';ctx.fillStyle='#55ead4'});if(taps.length===2){ctx.beginPath();ctx.moveTo(taps[0].x,taps[0].y);ctx.lineTo(taps[1].x,taps[1].y);ctx.stroke()}ctx.restore()}
+ measures.forEach(m=>{ctx.save();ctx.strokeStyle='#ff5367';ctx.fillStyle='#ff5367';ctx.lineWidth=Math.max(2,canvas.width/500);ctx.font=`bold ${Math.max(12,canvas.width/60)}px system-ui`;if(m.kind==='Angle'){const {a,b,c,angleDeg}=m;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y);ctx.stroke();[a,b,c].forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x,p.y,Math.max(4,canvas.width/190),0,Math.PI*2);ctx.fill();ctx.fillText(['A','B (vertex)','C'][i],p.x+7,p.y-8)});let t1=Math.atan2(a.y-b.y,a.x-b.x),t2=Math.atan2(c.y-b.y,c.x-b.x),diff=t2-t1;while(diff<=-Math.PI)diff+=2*Math.PI;while(diff>Math.PI)diff-=2*Math.PI;const r=Math.max(18,canvas.width/22);ctx.beginPath();ctx.arc(b.x,b.y,r,t1,t1+diff,diff<0);ctx.strokeStyle='#ffd166';ctx.stroke();const mid=t1+diff/2,tx=b.x+Math.cos(mid)*(r+14),ty=b.y+Math.sin(mid)*(r+14),txt=angleDeg.toFixed(2)+'°';ctx.fillStyle='#111827dd';ctx.fillRect(tx-28,ty-16,56,24);ctx.fillStyle='#ffd166';ctx.fillText(txt,tx-24,ty+1)}else if(m.kind==='Diameter'){ctx.beginPath();ctx.arc(m.cx,m.cy,m.radiusPx,0,Math.PI*2);ctx.strokeStyle='#ffd166';ctx.stroke();ctx.beginPath();ctx.moveTo(m.cx-m.radiusPx,m.cy);ctx.lineTo(m.cx+m.radiusPx,m.cy);ctx.strokeStyle='#ff5367';ctx.stroke();ctx.fillStyle='#ffd166';ctx.fillText(`Ø ${convert(m.mm).toFixed(2)} ${un()}`,m.cx+8,m.cy-8)}else{ctx.beginPath();ctx.moveTo(m.x1,m.y1);ctx.lineTo(m.x2,m.y2);ctx.stroke();[[m.x1,m.y1],[m.x2,m.y2]].forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],Math.max(4,canvas.width/190),0,Math.PI*2);ctx.fill()});const txt=`${m.kind}: ${convert(m.mm).toFixed(2)} ${un()}`;const midx=(m.x1+m.x2)/2,midy=(m.y1+m.y2)/2,tw=ctx.measureText(txt).width;ctx.fillStyle='#111827dd';ctx.fillRect(midx-tw/2-5,midy-22,tw+10,27);ctx.fillStyle='#ff9aaa';ctx.fillText(txt,midx-tw/2,midy-3)}ctx.restore()});
+}
+function xy(ev){const r=canvas.getBoundingClientRect();return{x:(ev.clientX-r.left)*canvas.width/r.width,y:(ev.clientY-r.top)*canvas.height/r.height}}
+function loadImageIntoWorkbench(im,displayName){
+ name=displayName||'measurement';img=im;scale=null;taps=[];calibrationPoints=[];measures=[];detection=null;mode='idle';
+ const k=Math.min(1,1800/im.naturalWidth,1800/im.naturalHeight);canvas.width=Math.max(1,Math.round(im.naturalWidth*k));canvas.height=Math.max(1,Math.round(im.naturalHeight*k));
+ canvas.classList.remove('hidden');$('placeholder').classList.add('hidden');draw();
+ st('loadStatus',`Loaded ${name} • ${im.naturalWidth} × ${im.naturalHeight}px`,'good');st('calStatus','Set reference points using a known ruler spacing.');st('measureStatus','Calibrate before measuring.');st('detectStatus','Ready to detect a candidate object.');enabled();
+}
+$('photo').addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;const displayName=f.name.replace(/\.[^.]+$/,'')||'measurement',url=URL.createObjectURL(f),im=new Image();im.onload=()=>{loadImageIntoWorkbench(im,displayName);URL.revokeObjectURL(url)};im.onerror=()=>{st('loadStatus','Could not open this photo. Try another image.','bad');URL.revokeObjectURL(url)};im.src=url});
+// Live camera capture: the captured still enters the same calibrated measurement workflow.
+let cameraStream=null,cameraFacing='environment',liveMode='idle',livePoints=[],livePxPerMm=null,liveRaf=0;
+const liveCanvas=$('liveOverlay'),liveCtx=liveCanvas.getContext('2d');
+function liveResize(){const v=$('cameraVideo');if(!v.videoWidth||!v.videoHeight)return;liveCanvas.width=v.videoWidth;liveCanvas.height=v.videoHeight;drawLiveOverlay()}
+function drawLiveOverlay(){if(!liveCanvas.width||!liveCanvas.height)return;liveCtx.clearRect(0,0,liveCanvas.width,liveCanvas.height);liveCtx.lineWidth=Math.max(3,liveCanvas.width/400);liveCtx.font=`bold ${Math.max(18,liveCanvas.width/32)}px system-ui`;liveCtx.strokeStyle='#55ead4';liveCtx.fillStyle='#55ead4';if(livePoints.length){livePoints.forEach((p,i)=>{liveCtx.beginPath();liveCtx.arc(p.x,p.y,liveCanvas.width/100,0,Math.PI*2);liveCtx.fill();liveCtx.fillText(String(i+1),p.x+12,p.y-12)});if(livePoints.length>=2){const [a,b]=livePoints;liveCtx.beginPath();liveCtx.moveTo(a.x,a.y);liveCtx.lineTo(b.x,b.y);liveCtx.stroke();if(livePxPerMm){const mm=Math.hypot(b.x-a.x,b.y-a.y)/livePxPerMm;const unit=$('liveUnit').value,factor=unit==='mm'?1:unit==='cm'?0.1:1/25.4;$('liveReadout').textContent=`Live distance: ${(mm*factor).toFixed(2)} ${unit} • calibrated`;}}}if(liveMode==='cal'&&livePoints.length<2)$('liveReadout').textContent='Calibration: tap two marks on the known reference.';else if(liveMode==='measure'&&livePoints.length<2)$('liveReadout').textContent='Measurement: tap two endpoints on the object.'}
+liveCanvas.addEventListener('pointerdown',e=>{if(!cameraStream||liveMode==='idle')return;e.preventDefault();const r=liveCanvas.getBoundingClientRect(),p={x:(e.clientX-r.left)*liveCanvas.width/r.width,y:(e.clientY-r.top)*liveCanvas.height/r.height};livePoints.push(p);if(livePoints.length===2){const px=Math.hypot(livePoints[1].x-livePoints[0].x,livePoints[1].y-livePoints[0].y);if(liveMode==='cal'){const known=parseFloat($('liveKnown').value),u=$('liveUnit').value,mm=known*(u==='mm'?1:u==='cm'?10:25.4);if(!(mm>0)){livePoints=[];$('liveReadout').textContent='Enter a valid reference length first.';return}livePxPerMm=px/mm;liveMode='idle';$('liveReadout').textContent=`Calibrated • ${livePxPerMm.toFixed(3)} px/mm. Tap Measure live.`;$('liveMeasure').disabled=false;}else if(liveMode==='measure'){liveMode='idle';$('liveReadout').textContent=`Live distance: ${(px/livePxPerMm*($('liveUnit').value==='mm'?1:$('liveUnit').value==='cm'?0.1:1/25.4)).toFixed(2)} ${$('liveUnit').value} • points fixed on screen`; } }drawLiveOverlay()});
+$('liveCalibrate').addEventListener('click',()=>{if(!cameraStream)return;livePoints=[];liveMode='cal';$('liveMeasure').disabled=true;$('liveReadout').textContent='Tap two marks on a known reference length.';drawLiveOverlay()});$('liveMeasure').addEventListener('click',()=>{if(!livePxPerMm){$('liveReadout').textContent='Calibrate first using a known reference.';return}livePoints=[];liveMode='measure';$('liveReadout').textContent='Tap two endpoints on the object in the live view.';drawLiveOverlay()});$('clearLive').addEventListener('click',()=>{livePoints=[];liveMode='idle';drawLiveOverlay();$('liveReadout').textContent=livePxPerMm?'Live calibration retained. Choose Measure live.':'Live ruler not calibrated.'});
+async function startLiveCamera(){
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){st('cameraStatus','Camera access needs a secure HTTPS page or a supported Android WebView.','bad');return}
+ try{
+  if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());
+  cameraStream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:cameraFacing},width:{ideal:1920},height:{ideal:1080}}});
+  const video=$('cameraVideo');video.srcObject=cameraStream;await video.play();$('cameraStage').style.display='block';$('startCamera').disabled=true;$('stopCamera').disabled=false;$('captureCamera').disabled=false;$('flipCamera').disabled=false;$('liveCalibrate').disabled=false;$('clearLive').disabled=false;video.onloadedmetadata=liveResize;liveResize();
+  st('cameraStatus',`Live camera on • ${video.videoWidth||'—'} × ${video.videoHeight||'—'} • keep the phone steady.`,'good');
+ }catch(err){const msg=err&&err.name==='NotAllowedError'?'Camera permission was denied. Allow camera access in browser/site settings and try again.':err&&err.name==='NotFoundError'?'No camera was found on this device.':'Could not start camera. Try Chrome over HTTPS, then allow camera permission.';st('cameraStatus',msg,'bad')}
+}
+function stopLiveCamera(){if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}$('cameraVideo').srcObject=null;$('cameraStage').style.display='none';$('startCamera').disabled=false;$('stopCamera').disabled=true;$('captureCamera').disabled=true;$('flipCamera').disabled=true;$('liveCalibrate').disabled=true;$('liveMeasure').disabled=true;$('clearLive').disabled=true;liveMode='idle';st('cameraStatus','Camera is off.')}
+$('startCamera').addEventListener('click',startLiveCamera);$('stopCamera').addEventListener('click',stopLiveCamera);
+$('flipCamera').addEventListener('click',async()=>{cameraFacing=cameraFacing==='environment'?'user':'environment';await startLiveCamera()});
+$('captureCamera').addEventListener('click',()=>{const video=$('cameraVideo');if(!cameraStream||!video.videoWidth){st('cameraStatus','Wait for the live camera picture, then capture again.','bad');return}const snap=document.createElement('canvas'),k=Math.min(1,1800/video.videoWidth,1800/video.videoHeight);snap.width=Math.round(video.videoWidth*k);snap.height=Math.round(video.videoHeight*k);snap.getContext('2d',{willReadFrequently:true}).drawImage(video,0,0,snap.width,snap.height);const im=new Image();im.onload=()=>{loadImageIntoWorkbench(im,'live_camera_capture');st('cameraStatus','Captured frame loaded. Calibrate using a known ruler/reference in this frame, then measure.','good');$('canvasStatus').textContent='Captured from live camera. Calibration is required for lengths; angle measurement needs no calibration.'};im.onerror=()=>st('cameraStatus','Could not process this frame. Please capture again.','bad');im.src=snap.toDataURL('image/jpeg',.92)});
+window.addEventListener('pagehide',()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop())});
+$('reset').addEventListener('click',()=>{img=null;scale=null;taps=[];calibrationPoints=[];measures=[];detection=null;mode='idle';$('photo').value='';canvas.classList.add('hidden');$('placeholder').classList.remove('hidden');ctx.clearRect(0,0,canvas.width,canvas.height);['loadStatus','detectStatus','calStatus','measureStatus'].forEach(id=>st(id,id==='loadStatus'?'No photo loaded.':'Load a photo first.'));enabled()});
+$('calibrate').addEventListener('click',()=>{const v=parseFloat($('known').value),mm=mmFrom(v,$('knownUnit').value);if(!(mm>0)){st('calStatus','Enter a reference distance above zero.','bad');return}mode='cal';taps=[];calibrationPoints=[];draw();st('calStatus',`Tap two ruler marks exactly ${v} ${$('knownUnit').value} apart.`);st('canvasStatus','Calibration mode: tap the two ruler marks.')});
+$('clearCal').addEventListener('click',()=>{scale=null;taps=[];calibrationPoints=[];mode='idle';enabled();draw();st('calStatus','Calibration cleared. Calibrate again before measuring.');st('measureStatus','Calibrate before measuring.')});
+function start(m){if(scale===null)return;mode=m;taps=[];draw();st('measureStatus',m==='manual'?'Tap the two endpoints of the dimension.':m==='edge'?'Tap two opposite corners of a small box crossing the edge.':'Tap two opposite corners of the detected object box.')}
+$('manual').addEventListener('click',()=>start('manual'));$('diameter').addEventListener('click',()=>{if(scale===null)return;mode='diameter';taps=[];draw();st('measureStatus','Diameter mode: tap the centre of the circle, then a point on its edge.','good')});$('angle').addEventListener('click',()=>{if(!img)return;mode='angle';taps=[];draw();st('measureStatus','Angle mode: tap A, then the vertex B, then C. Calibration is not required.','good');st('canvasStatus','Angle mode: tap three points in order A → vertex B → C.')});$('box').addEventListener('click',()=>{if(!detection){st('measureStatus','Run Detect object first.','bad');return}const d=detection;add({x:d.x,y:d.y},{x:d.x+d.w,y:d.y+d.h},'Detected-box diagonal');add({x:d.x,y:d.y},{x:d.x+d.w,y:d.y},'Detected-box width');add({x:d.x,y:d.y},{x:d.x,y:d.y+d.h},'Detected-box height');draw()});$('edge').addEventListener('click',()=>start('edge'));
+canvas.addEventListener('pointerdown',e=>{if(!img||mode==='idle')return;e.preventDefault();taps.push(xy(e));draw();if(mode==='diameter'){if(taps.length<2){st('measureStatus',taps.length===1?'Centre selected. Tap a point on the circle edge.':'Tap the circle centre.');return}const [c,r]=taps,rad=Math.hypot(r.x-c.x,r.y-c.y),diamPx=rad*2;if(rad<2){taps=[];draw();st('measureStatus','Radius too small; try again.','bad');return}measures.push({kind:'Diameter',cx:c.x,cy:c.y,radiusPx:rad,mm:diamPx/scale,px:diamPx});taps=[];mode='idle';enabled();draw();st('measureStatus',`Diameter measured: ${convert(diamPx/scale).toFixed(2)} ${un()}`,'good');return}if(mode==='angle'){if(taps.length<3){st('measureStatus',`Angle point ${taps.length}/3 selected. ${taps.length===1?'Tap the vertex next.':taps.length===2?'Tap the final point.':''}`);return}const [a,b,c]=taps;const ux=a.x-b.x,uy=a.y-b.y,vx=c.x-b.x,vy=c.y-b.y,den=Math.hypot(ux,uy)*Math.hypot(vx,vy);if(den<1){taps=[];draw();st('measureStatus','Points are too close to define an angle. Try again.','bad');return}const cosine=Math.max(-1,Math.min(1,(ux*vx+uy*vy)/den)),angleDeg=Math.acos(cosine)*180/Math.PI;measures.push({kind:'Angle',a,b,c,angleDeg});taps=[];mode='idle';enabled();draw();st('measureStatus',`Angle measured: ${angleDeg.toFixed(2)}°`,'good');return}if(taps.length<2)return;const [a,b]=taps;
+ if(mode==='cal'){const d=Math.hypot(b.x-a.x,b.y-a.y),mm=mmFrom(parseFloat($('known').value),$('knownUnit').value);if(d<2){taps=[];draw();st('calStatus','Points too close. Try again.','bad');return}scale=d/mm;calibrationPoints=[{x:a.x,y:a.y},{x:b.x,y:b.y}];taps=[];mode='idle';enabled();draw();st('calStatus',`Calibrated: ${d.toFixed(1)} pixels = ${mm.toFixed(2)} mm (${scale.toFixed(2)} px/mm).`,'good');st('measureStatus','Choose a measurement method.');return}
+ if(mode==='manual'){add(a,b,'Manual');taps=[];mode='idle';draw();return}
+ if(mode==='edge'){const x0=Math.max(0,Math.floor(Math.min(a.x,b.x))),x1=Math.min(canvas.width-1,Math.ceil(Math.max(a.x,b.x))),y0=Math.max(0,Math.floor(Math.min(a.y,b.y))),y1=Math.min(canvas.height-1,Math.ceil(Math.max(a.y,b.y)));const found=strongEdge(x0,y0,x1,y1);taps=[];mode='idle';if(found){add(found.a,found.b,'Edge-assisted');st('measureStatus','Candidate edge found. Check it visually; undo if incorrect.','good')}else st('measureStatus','No strong edge found. Try a clearer region or use manual measure.','bad');draw()}
+});
+function add(a,b,kind){const px=Math.hypot(b.x-a.x,b.y-a.y),mm=px/scale;measures.push({x1:a.x,y1:a.y,x2:b.x,y2:b.y,mm,px,kind});enabled();draw();st('measureStatus',`${kind}: ${convert(mm).toFixed(2)} ${un()} added.`,'good')}
+function strongEdge(x0,y0,x1,y1){
+ if(x1-x0<4||y1-y0<4)return null;const d=ctx.getImageData(0,0,canvas.width,canvas.height).data,w=canvas.width;const gray=(x,y)=>{const i=(y*w+x)*4;return .299*d[i]+.587*d[i+1]+.114*d[i+2]};let best=null;
+ if(x1-x0>=y1-y0){let mx=0,bx=0;for(let x=x0+1;x<x1;x++){let s=0;for(let y=y0;y<=y1;y++)s+=Math.abs(gray(x+1,y)-gray(x-1,y));if(s>mx){mx=s;bx=x}}if(mx>(y1-y0)*10)best={a:{x:bx,y:y0},b:{x:bx,y:y1},score:mx}}
+ if(y1-y0>=x1-x0){let my=0,by=0;for(let y=y0+1;y<y1;y++){let s=0;for(let x=x0;x<=x1;x++)s+=Math.abs(gray(x,y+1)-gray(x,y-1));if(s>my){my=s;by=y}}if(my>(x1-x0)*10&&(!best||my>best.score))best={a:{x:x0,y:by},b:{x:x1,y:by},score:my}}
+ return best;
+}
+// Improved classic-vision detector: can find either darker or brighter foregrounds.
+// It proposes a bounding box only; inspect the box before trusting dimensions.
+$('detect').addEventListener('click',()=>{
+ if(!img)return;st('detectStatus','Analysing background contrast and candidate objects…');setTimeout(()=>{
+ try{
+  const data=ctx.getImageData(0,0,canvas.width,canvas.height).data,w=canvas.width,h=canvas.height;
+  const stride=Math.max(1,Math.floor(Math.max(w,h)/700)),sw=Math.ceil(w/stride),sh=Math.ceil(h/stride),n=sw*sh;
+  const gray=(x,y)=>{const i=(Math.min(w-1,Math.max(0,x))+Math.min(h-1,Math.max(0,y))*w)*4;return .299*data[i]+.587*data[i+1]+.114*data[i+2]};
+  const border=[];const step=Math.max(1,Math.floor(Math.min(w,h)/120));
+  for(let x=0;x<w;x+=step){border.push(gray(x,0),gray(x,h-1))}for(let y=0;y<h;y+=step){border.push(gray(0,y),gray(w-1,y))}
+  border.sort((a,b)=>a-b);const bg=border[Math.floor(border.length*.5)],sensitivity=$('sensitivity').value,delta=sensitivity==='low'?64:sensitivity==='high'?24:42;
+  const vals=new Uint8Array(n);for(let yy=0;yy<sh;yy++)for(let xx=0;xx<sw;xx++)vals[yy*sw+xx]=Math.round(gray(xx*stride,yy*stride));
+  let best=null;
+  // Search dark-on-light and light-on-dark masks; retain the strongest compact component.
+  for(const polarity of ['dark','light']){
+   const mask=new Uint8Array(n);for(let i=0;i<n;i++)mask[i]=polarity==='dark'?(vals[i]<bg-delta?1:0):(vals[i]>bg+delta?1:0);
+   const clean=new Uint8Array(n);for(let y=1;y<sh-1;y++)for(let x=1;x<sw-1;x++){const i=y*sw+x;if(!mask[i])continue;let nb=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)if(dx||dy)nb+=mask[(y+dy)*sw+x+dx];if(nb>=3)clean[i]=1}
+   const seen=new Uint8Array(n),queue=new Int32Array(n);
+   for(let i=0;i<n;i++){
+    if(!clean[i]||seen[i])continue;let head=0,tail=0,minx=sw,miny=sh,maxx=0,maxy=0,count=0,touches=false;
+    queue[tail++]=i;seen[i]=1;
+    while(head<tail){const k=queue[head++],x=k%sw,y=Math.floor(k/sw);count++;if(x<minx)minx=x;if(x>maxx)maxx=x;if(y<miny)miny=y;if(y>maxy)maxy=y;if(x===0||y===0||x===sw-1||y===sh-1)touches=true;
+     for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=sw||ny>=sh)continue;const q=ny*sw+nx;if(clean[q]&&!seen[q]){seen[q]=1;queue[tail++]=q}}
+    }
+    const bw=maxx-minx+1,bh=maxy-miny+1,boxArea=bw*bh,fill=count/boxArea,areaRatio=count/n;
+    if(!touches&&count>Math.max(24,n*.0008)&&bw>sw*.06&&bh>sh*.06&&areaRatio<.88&&fill>.18){
+     const centerPenalty=Math.hypot((minx+maxx)/2/sw-.5,(miny+maxy)/2/sh-.5),score=count*(.45+Math.min(fill,1))*(1-centerPenalty*.22);
+     if(!best||score>best.score)best={minx,miny,maxx,maxy,count,score,polarity,fill};
+    }
+   }
+  }
+  if(!best){detection=null;draw();enabled();st('detectStatus','No confident object found. Try a plain contrasting background, adjust sensitivity, or use manual measurement.','bad');st('canvasStatus','Detection could not isolate a confident foreground region. You can still measure manually.');return}
+  let x=best.minx*stride,y=best.miny*stride,x2=Math.min(w-1,(best.maxx+1)*stride),y2=Math.min(h-1,(best.maxy+1)*stride);
+  const pad=Math.max(2,Math.round(Math.min(x2-x,y2-y)*.012));x=Math.max(0,x-pad);y=Math.max(0,y-pad);x2=Math.min(w-1,x2+pad);y2=Math.min(h-1,y2+pad);
+  detection={x,y,w:x2-x,h:y2-y,polarity:best.polarity,confidence:Math.min(99,Math.round(48+best.fill*40))};draw();enabled();
+  st('detectStatus',`Candidate box: ${detection.w.toFixed(0)} × ${detection.h.toFixed(0)} px • ${best.polarity==='dark'?'darker':'brighter'} than background. Please check the blue box.`,'good');
+  st('canvasStatus','Smarter contrast detection is a candidate, not guaranteed AI segmentation. If the box includes the background/ruler, adjust sensitivity or measure manually.');
+ }catch(err){st('detectStatus','Detection failed for this image. Use manual measurement or edge assist.','bad')}
+ },30);
+});
+$('clearDetect').addEventListener('click',()=>{detection=null;draw();enabled();st('detectStatus','Detection cleared.')});
+$('undo').addEventListener('click',()=>{measures.pop();enabled();draw();st('measureStatus','Last measurement removed.')});$('clearMeasures').addEventListener('click',()=>{measures=[];enabled();draw();st('measureStatus','Measurements cleared.')});
+$('unit').addEventListener('change',()=>{draw();update()});
+$('compare').addEventListener('click',()=>{const a=parseFloat($('actual').value),m=measures[measures.length-1];if(!m||m.kind==='Angle'){st('errorStatus','Add a length measurement last before comparing against an actual value in mm.','bad');return}if(!(a>0)){st('errorStatus','Enter an actual measurement greater than zero.','bad');return}st('errorStatus',`App: ${m.mm.toFixed(2)} mm • Actual: ${a.toFixed(2)} mm • Absolute error: ${Math.abs(m.mm-a).toFixed(2)} mm • Percentage error: ${(Math.abs(m.mm-a)/a*100).toFixed(2)}% • ${$('tolerance').value!==''?(Math.abs(m.mm-a)<=Math.max(0,parseFloat($('tolerance').value)||0)?'WITHIN TOLERANCE':'OUTSIDE TOLERANCE'):'Tolerance not set'}`,'good')});
+$('saveImage').addEventListener('click',()=>canvas.toBlob(b=>{if(b)download(b,name+'_annotated.png')},'image/png'));
+$('csv').addEventListener('click',()=>{const rows=[['Image',name],['Scale px/mm',scale],[],['No','Type','Result','Pixel distance']];measures.forEach((m,i)=>rows.push([i+1,m.kind,m.kind==='Angle'?m.angleDeg.toFixed(4)+' degrees':m.mm.toFixed(4)+' mm',m.kind==='Angle'?'':m.px.toFixed(2)]));download(new Blob([rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n')],{type:'text/csv'}),name+'_measurements.csv')});
+function download(blob,file){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+$('report').addEventListener('click',()=>{const data=canvas.toDataURL('image/png'),rows=measures.map((m,i)=>`<tr><td>${i+1}</td><td>${m.kind}</td><td>${m.kind==='Angle'?m.angleDeg.toFixed(2)+'°':m.mm.toFixed(2)+' mm'}</td><td>${m.kind==='Angle'?'—':m.px.toFixed(1)+' px'}</td></tr>`).join('');const w=window.open('','_blank');if(!w){st('measureStatus','Allow pop-ups to print or save the report as PDF.','bad');return}w.document.write(`<html><head><title>Mini Measure Report</title><style>body{font:14px Arial;margin:28px;color:#182033}img{max-width:100%;max-height:55vh}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccd2dc;padding:8px;text-align:left}th{background:#edf3fa}</style></head><body><h1>Mini Measure Studio 6.0</h1><p>Image: ${name}<br>Calibration: ${scale===null?'Not set (angle-only mode)':scale.toFixed(3)+' pixels/mm'}<br>Measurements: ${measures.length}</p><h2>Annotated photo</h2><img src="${data}"><h2>Results</h2><table><tr><th>No.</th><th>Type</th><th>Result</th><th>Pixel distance</th></tr>${rows}</table><p>Prototype results should be validated with a suitable measuring instrument. Perspective and segmentation errors may affect results.</p><button onclick="window.print()">Print / Save as PDF</button></body></html>`);w.document.close()});
+
+function updateModel(){const L=parseFloat($('dimL').value),W=parseFloat($('dimW').value),H=parseFloat($('dimH').value),rho=parseFloat($('partMaterial').value);if(!(L>0&&W>0&&H>0&&rho>0&&[L,W,H,rho].every(Number.isFinite))){st('modelStatus','Enter positive finite dimensions and density.','bad');return}const max=Math.max(L,W,H),sx=120*L/max,sy=90*H/max,sz=70*W/max,cube=$('modelCube'),faces=cube.querySelectorAll('.face');cube.style.width=sx+'px';cube.style.height=sy+'px';faces[0].style.width=sx+'px';faces[0].style.height=sy+'px';faces[0].style.transform=`translateZ(${sz/2}px)`;faces[1].style.width=sx+'px';faces[1].style.height=sy+'px';faces[1].style.transform=`rotateY(180deg) translateZ(${sz/2}px)`;faces[2].style.width=sz+'px';faces[2].style.height=sy+'px';faces[2].style.transform=`rotateY(90deg) translateZ(${sx-sz/2}px)`;faces[3].style.width=sz+'px';faces[3].style.height=sy+'px';faces[3].style.transform=`rotateY(-90deg) translateZ(${sz/2}px)`;faces[4].style.width=sx+'px';faces[4].style.height=sz+'px';faces[4].style.transform=`rotateX(90deg) translateZ(${sz/2}px)`;faces[5].style.width=sx+'px';faces[5].style.height=sz+'px';faces[5].style.transform=`rotateX(-90deg) translateZ(${sy-sz/2}px)`;cube.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg)`;const vol=L*W*H/1000,area=2*(L*W+L*H+W*H)/100;$('volumeValue').textContent=vol.toLocaleString(undefined,{maximumFractionDigits:2})+' cm³';$('massValue').textContent=(vol*rho).toLocaleString(undefined,{maximumFractionDigits:2})+' g';$('surfaceValue').textContent=area.toLocaleString(undefined,{maximumFractionDigits:2})+' cm²';st('modelStatus','Interactive rectangular-prism preview. This is a dimension-based model, not automatic 3D scanning.','good')}
+$('update3d').addEventListener('click',updateModel);$('useLast').addEventListener('click',()=>{const m=measures[measures.length-1];if(!m||m.kind==='Angle'){st('modelStatus','Add a calibrated length or diameter measurement first.','bad');return}$('dimL').value=m.mm;updateModel();st('modelStatus','Last measured dimension copied into Length. Adjust Width and Height to match the part.','good')});$('modelStage').addEventListener('pointerdown',e=>{dragModel={x:e.clientX,y:e.clientY,rx:rotX,ry:rotY};$('modelStage').setPointerCapture(e.pointerId)});$('modelStage').addEventListener('pointermove',e=>{if(!dragModel)return;rotY=dragModel.ry+(e.clientX-dragModel.x)*.7;rotX=dragModel.rx-(e.clientY-dragModel.y)*.5;$('modelCube').style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg)`});$('modelStage').addEventListener('pointerup',()=>{dragModel=null});$('modelStage').addEventListener('pointercancel',()=>{dragModel=null});updateModel();
+
+enabled();
+})();
+</script>
+</body></html>
